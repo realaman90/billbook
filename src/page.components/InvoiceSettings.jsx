@@ -52,8 +52,8 @@ export default function InvoiceSettings(){
                 <Typography variant="subtitle">Add Fee</Typography>
                 <IconButton><Add /></IconButton>
             </Box>
-            <Input size="small" label="Fee Name"/>
-            <Input size="small" label="percentage"/>
+            <Input size="small" label="Fee Name" name='fee'/>
+            <Input size="small" label="percentage" name='percentage'/>
         </Box>
 
         </>
