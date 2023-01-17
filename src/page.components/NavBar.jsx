@@ -37,7 +37,7 @@ export default function NavBar(width){
         <List>
             {menuList.map(({name, icon})=>(
                 <ListItem key={name} >
-                    <ListItemButton aria-selected sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                    <ListItemButton aria-selected >
                         <ListItemIcon sx={{display:'flex',  justifyContent:'center'}}>{icon}</ListItemIcon>
                         <ListItemText primary={name} />
                     </ListItemButton>

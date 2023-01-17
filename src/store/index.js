@@ -7,7 +7,9 @@ import {
     updateItem,
     removeItem,
     addItemTax,
-    invoiceFormReducer, 
+    invoiceFormReducer,
+    addFee,
+    changeCurrency
 } from "./slices/invoiceForm";
 import { clientApi, senderApi, itemsApi } from "./apis/invoiceApis";
 
@@ -35,6 +37,8 @@ export {
     removeItem,
     addItemTax,
     addItem,
+    addFee,
+    changeCurrency,
 
 };
 

@@ -48,12 +48,7 @@ const invoiceFormSlice = createSlice({
         subtotal:0,
         totalTax:0,
         totalDiscount:0,
-        fee:[{
-            name:'Shipping',
-            amount:100,
-            rate:5,
-            tax:5,
-        }],
+        fee:[{name:'',amount:0,tax:0, rate:0}],
         total:0,
         payments:[
             
@@ -105,6 +100,16 @@ const invoiceFormSlice = createSlice({
             const {index} = action.payload;
             state.items[index].tax = [...state.items[index].tax, action.payload]
         },
+        addFee(state,action){
+            state.fee.push(action.payload);
+            let arr = state.fee.map(fee => {return fee.amount + fee.tax})
+            console.log(arr.reduce((a,b)=> a+b,0));
+            // state.balanceDue = state.total - state.payments.map(payment=>parseFloat(payment.amount)).reduce((a,b)=>a+b,0);
+        },
+        changeCurrency(state, action){
+            state.currency = action.payload
+        }
+
     }
 });
 export const {
@@ -114,7 +119,9 @@ export const {
     updateItem,
     removeItem,
     addItemTax,
-    addItem
+    addItem,
+    addFee,
+    changeCurrency,
 
 }= invoiceFormSlice.actions;
 export const invoiceFormReducer = invoiceFormSlice.reducer

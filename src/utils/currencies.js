@@ -4,37 +4,37 @@ export  const currencies = [
         code:'IN',
         emoji:'🇮🇳',
         label: 'Ruppee',
-        currency:'₹'
+        value:'₹'
     },
     {
         code:'EUR',
         emoji:'🇪🇺',
         label: 'Euro',
-        currency:'€'
+        value:'€'
     },
     {
         code:'USD',
         emoji:'🇺🇸',
         label: 'American Dollar',
-        currency:'$'
+        value:'$'
     },
     {
         code:'SEK',
         emoji:'🇸🇪',
         label: 'Swedish Kronor',
-        currency:'SEK'
+        value:'SEK'
     },
     {
         code:'GBP',
         emoji:'🇬🇧',
         label: 'British Pounds',
-        currency:'£'
+        value:'£'
     },
     {
         code:'AUD',
         emoji:'🇦🇺',
         label:'Australian Dollar',
-        currency:'A$'
+        value:'A$'
     }
 
 

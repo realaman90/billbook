@@ -74,7 +74,7 @@ export default function InvoiceBottomContainer(){
             <Grid xsOffset={1} xs={7} sm={10}>
                 <Box>
                     
-                    <Input label='Terms & Conditions' fullWidth multiline minRows={4}></Input>
+                    <Input label='Additional Notes' fullWidth multiline></Input>
                 
                 </Box></Grid>            
             

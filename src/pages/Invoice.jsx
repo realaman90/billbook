@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
-import {Paper, Box, Typography, Divider} from "@mui/material";
+import {Paper, Box, Typography, Divider, Drawer, SwipeableDrawer} from "@mui/material";
 import InvoiceDetails from '../page.components/InvoiceDetails';
 import InvoiceContactDetails from '../page.components/InvoiceContact'
 import ItemsContainer from '../page.components/InvoiceItems';
@@ -21,6 +21,9 @@ export default function Invoice (){
         color: theme.palette.text.secondary,
         marginTop:10,
       }));
+      
+
+      
     return <>
     <Box sx={{padding:'20px 10px', fontFamily:'Montserrat'}}>
         <Grid container spacing={1} columns={{ xs: 1,  md: 12 }}>
@@ -44,12 +47,13 @@ export default function Invoice (){
                
             </Box>
         </Grid>
-        <Grid xs={1} md={4}>
-        
-            <Item sx={{marginTop:'55px'}}>
-            <InvoiceSettings />
-            </Item>
-        </Grid>
+            <Grid xs={1} md={4}>
+                <Item sx={{marginTop:'55px'}}>
+                <InvoiceSettings />
+                </Item>
+                {/* Swipable drawer for mobile */}
+                
+            </Grid>
 
         </Grid>
         

@@ -1,12 +1,43 @@
-import { Autocomplete, Divider, Typography, TextField, IconButton} from "@mui/material";
+import { Autocomplete, Divider, Typography, TextField, IconButton, Checkbox} from "@mui/material";
 import { Box } from "@mui/system";
 import { Add } from "@mui/icons-material";
-import { PrimaryButton } from "../micro.reusable.components/Buttons";
-import { currencies } from "../utils/countries";
+import { OutlineButton, PrimaryButton } from "../micro.reusable.components/Buttons";
+import { currencies } from "../utils/currencies";
 import Input from "../micro.reusable.components/Input";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addFee, changeCurrency } from "../store";
     
 
 export default function InvoiceSettings(){
+    const [toggle, setToggle] = useState(false);
+    const [feeName, setFeeName] = useState('');
+    const [feeAmount, setFeeAmount] = useState(0);
+    const [feeTax, setFeeTax] = useState(0);
+
+    const dispatch = useDispatch();
+    
+    const handleAddFee = ()=>{
+        dispatch(addFee({
+            name:feeName,
+            amount:feeAmount,
+            tax:feeTax*feeAmount/100,
+            rate:feeTax
+        }));
+        setFeeName('');
+        setFeeAmount(0);
+        setFeeTax(0);
+
+    }
+
+   
+    
+    const handleCheckBoxChange = (event)=>{
+       setToggle(!toggle)
+    }
+    
+    
+
     return(
         <>
         <Box sx={{padding:'10px', display:'flex', flexDirection:'column', gap:'10px'}}>
@@ -26,10 +57,10 @@ export default function InvoiceSettings(){
                 fullWidth
                 options={currencies}
                 autoHighlight
-                getOptionLabel={(option) =>option.emoji + ' '+ option.label + '  ' + option.currency}
+                getOptionLabel={(option) =>option.emoji + ' '+ option.label + '  ' + option.value}
                 renderOption={(props, option) => (
                     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                    {option.emoji} {option.label}  {option.currency}
+                    {option.emoji} {option.label}  {option.value}
                     </Box>
                 )}
                 renderInput={(params) => (
@@ -50,10 +81,21 @@ export default function InvoiceSettings(){
         <Box sx={{display:'flex', flexDirection:'column',gap:'10px',padding: '10px'}}>
             < Box sx={{display:'flex',flexDirection:'row',  alignItems:'center',justifyContent:'space-between'}}>
                 <Typography variant="subtitle">Add Fee</Typography>
-                <IconButton><Add /></IconButton>
+                
             </Box>
-            <Input size="small" label="Fee Name" name='fee'/>
-            <Input size="small" label="percentage" name='percentage'/>
+            <Input size="small" label="Fee Name" name='fee' onChange={(e)=> setFeeName(e.target.value)}/>
+            <Input size="small" label="Fee Amount" name='feeAmount' onChange={(e)=> setFeeAmount(parseFloat(e.target.value))}/>
+            <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                <Typography>Add Tax on fee</Typography>
+                <Checkbox onChange={handleCheckBoxChange} size= 'small'/>
+            </Box>
+            {toggle && 
+                (
+                
+                    
+                    <Input fullWidth size="small" label="Tax Percentage" name='feeTaxPercentage' onChange={(e)=> setFeeTax(parseFloat(e.target.value))}/>
+                                )}
+            <OutlineButton onClick={handleAddFee}>Add Fee</OutlineButton>
         </Box>
 
         </>
