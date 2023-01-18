@@ -12,8 +12,8 @@ import { addFee, changeCurrency } from "../store";
 export default function InvoiceSettings(){
     const [toggle, setToggle] = useState(false);
     const [feeName, setFeeName] = useState('');
-    const [feeAmount, setFeeAmount] = useState(0);
-    const [feeTax, setFeeTax] = useState(0);
+    const [feeAmount, setFeeAmount] = useState(null);
+    const [feeTax, setFeeTax] = useState(null);
 
     const dispatch = useDispatch();
     
@@ -36,6 +36,9 @@ export default function InvoiceSettings(){
        setToggle(!toggle)
     }
     
+    const handleInputChange = (value) => {
+        if(value){dispatch(changeCurrency(value.value))}
+    }
     
 
     return(
@@ -74,7 +77,8 @@ export default function InvoiceSettings(){
                     }}
                     />
                 )}
-                />
+                onChange={(event,value,reason) => handleInputChange(value)}
+            />
         </Box>
         <Divider></Divider>
 
@@ -83,18 +87,42 @@ export default function InvoiceSettings(){
                 <Typography variant="subtitle">Add Fee</Typography>
                 
             </Box>
-            <Input size="small" label="Fee Name" name='fee' onChange={(e)=> setFeeName(e.target.value)}/>
-            <Input size="small" label="Fee Amount" name='feeAmount' onChange={(e)=> setFeeAmount(parseFloat(e.target.value))}/>
-            <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+            <Input 
+                size="small" 
+                label="Fee Name" 
+                name='fee' 
+                value={feeName} 
+                onChange={(e)=> setFeeName(e.target.value)}
+            />
+            <Input 
+                size="small" 
+                label="Fee Amount" 
+                name='feeAmount' 
+                value={feeAmount?feeAmount:''} 
+                onChange={(e)=> setFeeAmount(parseFloat(e.target.value))}
+            />
+            <Box 
+                sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}
+            >
                 <Typography>Add Tax on fee</Typography>
-                <Checkbox onChange={handleCheckBoxChange} size= 'small'/>
+                <Checkbox 
+                    onChange={handleCheckBoxChange} size= 'small'
+                />
             </Box>
             {toggle && 
                 (
                 
                     
-                    <Input fullWidth size="small" label="Tax Percentage" name='feeTaxPercentage' onChange={(e)=> setFeeTax(parseFloat(e.target.value))}/>
-                                )}
+                    <Input 
+                        fullWidth 
+                        size="small" 
+                        label="Tax Percentage" 
+                        name='feeTaxPercentage' 
+                        value={feeTax?feeTax:''} 
+                        onChange={(e)=> setFeeTax(parseFloat(e.target.value))}
+                    />
+                )
+            }
             <OutlineButton onClick={handleAddFee}>Add Fee</OutlineButton>
         </Box>
 

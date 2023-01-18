@@ -86,7 +86,9 @@ const invoiceFormSlice = createSlice({
             state.totalDiscount = Math.round(((state.items
                                     .map(item=>parseFloat(item.discountAmount))
                                     .reduce((accum, currVal)=> accum+currVal,0)) + Number.EPSILON)*100)/100;
-            state.total =( state.subtotal - state.totalDiscount + state.totalTax )+ parseFloat(state.fee.map(fee=>fee.amount + fee.tax));
+            const feeArr = state.fee.map(fee => {return fee.amount + fee.tax});
+
+            state.total =Math.round((( state.subtotal - state.totalDiscount + state.totalTax )+ feeArr.reduce((a,b)=> a+b,0)+ Number.EPSILON)*100)/100;
             state.balanceDue = state.total - state.payments.map(payment=>parseFloat(payment.amount)).reduce((a,b)=>a+b,0);
             
 
@@ -102,9 +104,9 @@ const invoiceFormSlice = createSlice({
         },
         addFee(state,action){
             state.fee.push(action.payload);
-            let arr = state.fee.map(fee => {return fee.amount + fee.tax})
-            console.log(arr.reduce((a,b)=> a+b,0));
-            // state.balanceDue = state.total - state.payments.map(payment=>parseFloat(payment.amount)).reduce((a,b)=>a+b,0);
+            const feeArr = state.fee.map(fee => {return fee.amount + fee.tax});
+            state.total = state.total + Math.round((feeArr.reduce((a,b)=> a+b,0)+ Number.EPSILON)*100)/100;
+            state.balanceDue = state.total - state.payments.map(payment=>parseFloat(payment.amount)).reduce((a,b)=>a+b,0);
         },
         changeCurrency(state, action){
             state.currency = action.payload
