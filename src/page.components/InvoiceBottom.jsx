@@ -1,4 +1,4 @@
-import { Box, Divider, Typography, IconButton, Tooltip } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { AttachFile } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,27 +15,39 @@ export default function InvoiceBottomContainer() {
       if (label === 'label') {
         return (
           <React.Fragment key={index}>
-            {invoice.fee[1] && (
+            {fee.name && (
               <>
-                <Typography>{fee.name}</Typography>
-                <Typography>
-                  Tax on {fee.name} {fee.rate}%
-                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Typography>{fee.name}</Typography>
+                  <Typography variant="subtitle">
+                    {invoice.currency}
+                    {fee.amount}
+                  </Typography>
+                </Box>
+                {fee.tax > 0 && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <Typography>Tax on {fee.name}</Typography>
+                    <Typography variant="subtitle">
+                      {invoice.currency}
+                      {fee.tax}
+                    </Typography>
+                  </Box>
+                )}
               </>
             )}
           </React.Fragment>
         );
       }
-      // else{
-      //     return<React.Fragment key={index}>
-      //     {invoice.fee[0].amount > 0 &&
-      //     <>
-      //     <Typography key={index}>{invoice.currency}{fee.name}</Typography>
-      //     <Typography key={index + 1}>{invoice.currency}{fee.amount}</Typography>
-      //     </>
-      //     }
-      //     </React.Fragment>
-      // }
     });
   return (
     <>
@@ -47,6 +59,7 @@ export default function InvoiceBottomContainer() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 paddingRight: '5px',
+                margin: '10px 0',
               }}
             >
               <Typography variant="subtitle">Subtotal</Typography>
@@ -85,19 +98,51 @@ export default function InvoiceBottomContainer() {
             </Box>
             <Box
               sx={{
-                display: 'flex',
                 justifyContent: 'space-between',
                 paddingRight: '5px',
               }}
             >
               {renderFee('label')}
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography marginTop={2} variant="subtitle">
-                Total
-              </Typography>
-              <Typography variant="subtitle">Balance Due</Typography>
-            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+      <Divider />
+      <Grid container columns={{ xs: 8, sm: 12 }}>
+        <Grid xsOffset={1} xs={7} sm={12}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              paddingRight: '5px',
+            }}
+          >
+            <Typography marginTop={2} variant="subtitle">
+              Total
+            </Typography>
+            <Typography marginTop={2} variant="subtitle">
+              {invoice.currency}
+              {invoice.total}
+            </Typography>
+          </Box>
+        </Grid>
+      </Grid>
+      <Divider />
+      <Grid container columns={{ xs: 8, sm: 12 }}>
+        <Grid xsOffset={1} xs={7} sm={12}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              paddingRight: '5px',
+              margin: '10px 0px',
+            }}
+          >
+            <Typography variant="subtitle">Balance Due</Typography>
+            <Typography variant="subtitle">
+              {invoice.currency}
+              {invoice.balanceDue}
+            </Typography>
           </Box>
         </Grid>
       </Grid>

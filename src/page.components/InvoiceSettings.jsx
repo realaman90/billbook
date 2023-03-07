@@ -38,6 +38,7 @@ export default function InvoiceSettings() {
     setFeeName('');
     setFeeAmount(0);
     setFeeTax(0);
+    setToggle(!toggle)
   };
 
   const handleCheckBoxChange = (event) => {
@@ -78,6 +79,7 @@ export default function InvoiceSettings() {
       >
         <Typography variant="subtitle"> Currency</Typography>
         <Autocomplete
+          value={currencies[0]}
           id="country-select-demo"
           size="small"
           fullWidth
@@ -149,9 +151,10 @@ export default function InvoiceSettings() {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}
+          onClick={handleCheckBoxChange}
         >
           <Typography>Add Tax on fee</Typography>
-          <Checkbox onChange={handleCheckBoxChange} size="small" />
+          <Checkbox checked={toggle} onChange={handleCheckBoxChange} size="small" />
         </Box>
         {toggle && (
           <Input

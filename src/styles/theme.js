@@ -27,10 +27,18 @@ components: {
   // Name of the component
   MuiButton: {
     styleOverrides: {      
+
       root: {        
-        fontSize: '1rem',
-        '@media (max-width:600px)': {
+
+        fontFamily:'Montserrat, sans-serif',
+        fontSize: '.9rem',
+        fontWeight: 500,
+        textTransform: 'none',
+        '@media (max-width:1344px)': {
           fontSize: '0.75rem',
+        },
+        '@media (max-width:1024px)': {
+          fontSize: '0.65rem',
         },
       },
     },

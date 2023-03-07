@@ -48,7 +48,7 @@ const invoiceFormSlice = createSlice({
         subtotal:0,
         totalTax:0,
         totalDiscount:0,
-        fee:[{name:'',amount:0,tax:0, rate:0}],
+        fee:[],
         total:0,
         payments:[
             

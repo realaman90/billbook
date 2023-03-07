@@ -5,6 +5,7 @@ import {
   IconButton,
   Autocomplete,
   TextField,
+  createFilterOptions,
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Input from '../micro.reusable.components/Input';
@@ -21,6 +22,9 @@ import {
   removeItem,
   useFetchItemsQuery,
 } from '../store';
+
+const filter = createFilterOptions();
+
 
 export default function ItemsContainer() {
   const dispatch = useDispatch();
@@ -71,6 +75,7 @@ export default function ItemsContainer() {
     dispatch(removeItem(index));
   };
   const handleItemChange = (e, value, index) => {
+    
     items = [...items];
     if (typeof value === 'object' && value != null) {
       const { name, discount, id, price, tax, rate, description } = value;
@@ -86,7 +91,7 @@ export default function ItemsContainer() {
         description,
       };
       dispatch(updateItem(items));
-    } else {
+    } else if (typeof value === 'string') {
       items[index] = {
         ...items[index],
         name: '',
@@ -100,27 +105,23 @@ export default function ItemsContainer() {
       dispatch(updateItem(items));
     }
   };
-  const handleItemNameChange = (e, index, value) => {
-    if (!value.id) {
-      items = [...items];
-      items[index] = { ...items[index], name: value };
-      dispatch(updateItem(items));
-    }
-  };
+  // const handleItemNameChange = (e, value, index) => {
+  //   console.log(index);
+  //   if (!value.id) {
+  //     items = [...items];
+  //     items[index] = { ...items[index], name: value };
+  //     dispatch(updateItem(items));
+  //   }
+  // };
 
   const handleItemDescriptionChange = (e, index) => {
     const { value } = e.target;
-
     items = [...items];
     items[index] = { ...items[index], description: value };
     dispatch(updateItem(items));
   };
 
   const handleItemRateChange = (e, index) => {
-    function success(pos) {
-      console.log(pos);
-    }
-    navigator.geolocation.getCurrentPosition(success);
     const { value } = e.target;
     items = [...items];
     let amount = items[index].quantity * value;
@@ -339,10 +340,26 @@ export default function ItemsContainer() {
                     label={`Item ${index + 1}`}
                   />
                 )}
-                onInputChange={(e, value) =>
-                  handleItemNameChange(e, value, index)
-                }
+                // onInputChange={(e, value) =>
+                //   handleItemNameChange(e, value, index)
+                // }
                 onChange={(e, value) => handleItemChange(e, value, index)}
+                filterOptions = {
+                  (options, params) => {
+                    const filtered = filter(options, params);
+                    if (params.inputValue !== '') {
+                      filtered.push({
+                        inputValue: params.inputValue,
+                        name: `Add "${params.inputValue}"`,
+                      });
+                    }
+                    return filtered;
+                  }
+                }
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+
               />
               <Input
                 input={{
