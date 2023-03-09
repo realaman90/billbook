@@ -60,7 +60,7 @@ export default function InvoiceDetails() {
     // call aws server
     const response = await serverCall.get('/api/v1/s3Url');
     const { url } = response.data;
-    console.log(url);
+ 
     await fetch(url, {
       method: 'PUT',
       headers: {

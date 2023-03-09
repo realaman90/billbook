@@ -9,9 +9,10 @@ import {
     addItemTax,
     invoiceFormReducer,
     addFee,
-    changeCurrency
+    changeCurrency,
+    updatePayment,
 } from "./slices/invoiceForm";
-import { clientApi, senderApi, itemsApi } from "./apis/invoiceApis";
+import { clientApi, senderApi, itemsApi, invoiceApi } from "./apis/invoiceApis";
 
 const store = configureStore({
     reducer:{
@@ -19,6 +20,7 @@ const store = configureStore({
         [clientApi.reducerPath]: clientApi.reducer,
         [senderApi.reducerPath]: senderApi.reducer,
         [itemsApi.reducerPath]: itemsApi.reducer,
+        [invoiceApi.reducerPath]: invoiceApi.reducer,
     },
     middleware:(getDefaultMiddleware) =>{
         return getDefaultMiddleware()
@@ -39,6 +41,7 @@ export {
     addItem,
     addFee,
     changeCurrency,
+    updatePayment,
 
 };
 
@@ -46,4 +49,7 @@ export {
     useFetchClientsQuery,
     useFetchSenderQuery,
     useFetchItemsQuery,
+    useFetchInvoiceQuery,
+    useRecordPaymentMutation,
+
 } from './apis/invoiceApis';

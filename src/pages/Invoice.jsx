@@ -6,7 +6,7 @@ import InvoiceContactDetails from '../page.components/InvoiceContact'
 import ItemsContainer from '../page.components/InvoiceItems';
 import InvoiceBottomContainer from '../page.components/InvoiceBottom';
 import { PrimaryButton, OutlineButton } from '../micro.reusable.components/Buttons';
-import { Close, Delete } from '@mui/icons-material';
+import { Close, Delete, Share } from '@mui/icons-material';
 import InvoiceSettings from '../page.components/InvoiceSettings';
 
 
@@ -21,16 +21,34 @@ export default function Invoice (){
         color: theme.palette.text.secondary,
         marginTop:10,
       }));
-      
+    const handlePreview = ()=>{
+        //call api
+        
+        
+    }
+    const handleRecordPayment = ()=>{
+        //call api
+    }
+    
 
       
     return <>
     <Box sx={{padding:'20px 10px', fontFamily:'Montserrat'}}>
         <Grid container spacing={1} columns={{ xs: 1,  md: 12 }}>
         <Grid xs={1} md={8} >
-            <Box sx={{display:'flex', justifyContent:'flex-end', gap:'10px'}}>
-                <OutlineButton >Preview</OutlineButton>
-                <PrimaryButton> Share</PrimaryButton>
+            <Box sx={{display:'flex', justifyContent:'space-between', gap:'10px'}}>
+                <Box
+                    sx={{
+                        display: 'flex',                      
+                        alignItems: 'flex-end',
+                        gap: '10px',
+                        width: '100%',
+                    }}
+                >
+                    <OutlineButton onClick={handlePreview}>Preview</OutlineButton>
+                <OutlineButton onClick={handleRecordPayment} >Record Payment</OutlineButton>
+                </Box>
+                <PrimaryButton endIcon={<Share />}> Share</PrimaryButton>
                
             </Box>
             <Item>

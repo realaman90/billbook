@@ -5,11 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import Input from '../micro.reusable.components/Input';
 import React from 'react';
 import { PrimaryButton } from '../micro.reusable.components/Buttons';
+import dayjs from 'dayjs';
+import getLocaleDateString from '../utils/dateformat';
 
 export default function InvoiceBottomContainer() {
   const { invoice } = useSelector((state) => {
     return { invoice: state.invoiceForm };
   });
+
   const renderFee = (label) =>
     invoice.fee.map((fee, index) => {
       if (label === 'label') {
@@ -125,6 +128,41 @@ export default function InvoiceBottomContainer() {
               {invoice.total}
             </Typography>
           </Box>
+          {invoice.payments.length > 1 && (
+            <Box
+              sx={{
+                margin: '10px 0px',
+              }}
+            >
+              <Typography variant="subtitle">Payment Record</Typography>
+              <Box
+                sx={{
+                  margin: '10px 0px',
+                }}
+              >
+                {invoice.payments.map(
+                  (payment, index) =>
+                    payment.amount > 0 && (
+                      <Box
+                        key={index}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <Typography variant="italic">{`${dayjs(
+                          payment.date
+                        ).format(getLocaleDateString())}`}</Typography>
+                        <Typography variant="subtitle">
+                          {invoice.currency}
+                          {payment.amount}
+                        </Typography>
+                      </Box>
+                    )
+                )}
+              </Box>
+            </Box>
+          )}
         </Grid>
       </Grid>
       <Divider />
